@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Tienda</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body onload="CargarInfo()">
+    <!--Navegacion-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="#">Invitado</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="#" data-toggle="modal" data-target="#signinModal">Ingresar</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" data-toggle="modal" data-target="#signupModal">Registrarse</a>
+					</li>
+					<li class="nav-item">
+						<a  class="nav-link" href="#" id="logout" onclick="CerrarSesion()">Cerrar Sesión</a>
+					</li>
+					<li class="nav-item">
+						<a  class="nav-link" href="carrito.html" id="logout" >Ir al Carrito</a>
+					</li>
+					<li class="nav-item">
+						<a  class="nav-link" href="index.html" id="logout" >Inicio</a>
+					</li>		
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--MAIN CONTENT-->	
+	<div id="preferencias"></div>
+	
+	<div id="ComprasAnteriores"></div>
+	<!--Modal signup-->
+	<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Registrarse al sistema</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="signup-form">
+						<div class="form-grup">
+							<input type="email" id="signup-email" class="form-control" placeholder="Email" required><br>
+						</div>
+						<div class="form-grup">
+							<input type="password" id="signup-password" class="form-control" placeholder="Password"
+								required>
+						</div>
+						<div class="form-grup">
+							<p id="signup-error" class="text-danger"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							<button type="submit" class="btn btn-primary" >Registrarse</button>
+						</div>
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--Modal signin-->
+	<div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ingresar</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="login-form">
+						<div class="form-grup">
+							<input type="email" id="login-email" class="form-control" placeholder="Email" required><br>
+						</div>
+						<div class="form-grup">
+							<input type="password" id="login-password" class="form-control" placeholder="Password"
+								required>
+						</div>
+						<div class="form-grup">
+							<p id="signin-error"  class="text-danger"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							<button type="submit" class="btn btn-primary" >Ingresar</button>
+						</div>
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--Boostrap scripts-->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<!--conexión a firebase-->
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+	 https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-storage.js"></script>
+	<script>
+		// Your web app's Firebase configuration
+		var firebaseConfig = {
+			apiKey: "AIzaSyAt2kQR1DlHtaozTIlC_xDKjG0WdT6S9W4",
+			authDomain: "tienda-db4ab.firebaseapp.com",
+			databaseURL: "https://tienda-db4ab.firebaseio.com",
+			projectId: "tienda-db4ab",
+			storageBucket: "tienda-db4ab.appspot.com",
+			messagingSenderId: "425584637654",
+			appId: "1:425584637654:web:a081550597960969fcbb77"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		const auth = firebase.auth();
+		const fs = firebase.firestore();
+		const storageRef = firebase.storage().ref();
+	</script>
+	<!--CUSTOM CODE-->	
+    <script src="script/funciones.js"></script>    
+	<!-- Footer -->
+	<footer class="card text-white bg-dark">
+		<div class="card-header">
+			INFORMACION
+		</div>
+		<div class="card-body">
+            <!-- Grid row -->
+            <h5 class="text-uppercase ">¿Qué es este sitio?</h5>
+					<p>Una demostración de una tienda online para cualquier empresa o negocio adaptable y moldeable a sus necesidades.
+                        Con las funcionalidades: 
+                    </p>
+			<div class="row">
+                <div class="col-md-5 mb-md-0 mb-3">					
+					<ul class="list-unstyled">
+                        <ul>
+                            <li>Creación de usuarios por correo y contraseña (adaptable a una gran multitud de tipos de autentificación)</li>
+                            <li>Página de tienda con los productos que desee mostrar y cada producto tiene su propia página para mostrar muchos mas detalles de los mismos.</li>
+                            <li>Un carrito que almacena e informa al cliente el total a pagar en cualquier momento.</li>                            
+                        </ul>
+				</div>
+				<!-- Grid column -->
+				<div class="col-md-5 mb-md-0 mb-3">
+                    <ul class="list-unstyled">
+                        <li>Sistema de pago electrónico.</li>
+                        <li>Sistema de administración simple que le permite agregar, editar y eliminar los productos en una base de datos en línea</li>
+                        <li>Fácil seguimiento de las ventas electrónicas pendientes y la forma de entrega de la misma</li>
+                    </ul>
+				</div>			
+				<div class="col-md-3 mb-md-0 mb-3">
+					<!-- Links -->
+					<h5 class="text-uppercase">Contacto</h5>
+					<ul class="list-unstyled">
+						<li><p>Correo: <a href="">ricardo96apuy@gmail.com</a></p></li> 
+						<li><p>Teléfono: 84819488</p></li>
+					</ul>
+				</div>				
+			</div>
+			<!-- Copyright -->
+			<div class="footer-copyright text-center py-3">© 2020 Copyright: Your store online! <br>
+				<a href='https://www.freepik.com/vectors/banner'>Banner vector created by upklyak - www.freepik.com</a>
+			</div>
+			<!-- Copyright -->
+		</div>
+	</footer>
+</body>
+</html>
